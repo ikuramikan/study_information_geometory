@@ -1,0 +1,28 @@
+# vscode の出力ディレクトリ（latexmk の設定に準ずる）
+out/
+
+# バックアップファイル（エディタによる）
+*~
+*.bak
+*.sav
+*.swp
+*.swo
+*.tmp
+*.backup
+
+# Mac や Windows 特有の不要ファイル
+.DS_Store
+Thumbs.db
+desktop.ini# バックアップファイル（エディタによる）
+*~
+*.bak
+*.sav
+*.swp
+*.swo
+*.tmp
+*.backup
+
+# Mac や Windows 特有の不要ファイル
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -12,10 +12,11 @@
 
 
 \section{アファイン接続}
-
-\begin{defn}[アファイン接続]
+Euclid空間と違い，多様体上の異なる点における接ベクトルは直接比較できない．
+この比較を可能にするためにアファイン接続を導入する．
+\begin{defn}
 $M$を可微分多様体とする．
-任意の$X, Y, Z \in \vf{M}$，$f\in C^{\infty}(M)$に対して以下の4条件を満たす写像$\nabla:\vf{M}\times \vf{M}\ni (X,Y)\mapsto \nabla_{X}Y\in  \vf{M}$を$M$上のアファイン接続という．
+任意の$X, Y, Z \in \vf{M}$，$f\in C^{\infty}(M)$に対して以下の4条件を満たす写像$\nabla:\vf{M}\times \vf{M}\to\vf{M}$を$M$上のアファイン接続という．
 \begin{enumerate}[label=(A-\arabic*)]
     \item $\nabla_{X}(Y+Z) = \nabla_{X} Y + \nabla_{X} Z.$
     \item $\nabla_{X}(fY) = (Xf)Y+ f \nabla_{X} Y.$
@@ -23,16 +24,90 @@ $M$を可微分多様体とする．
     \item $\nabla_{fX} Y = f\nabla_X Y.$
 \end{enumerate}
 \end{defn}
-
 \begin{rem}
-条件(A-2)より第二引数に対して$C^\infty$線形性が成り立たない．
-そのためアファイン接続はテンソル性を持たない．
+条件(A-2)より，アファイン接続は第二引数に対して$C^\infty(M)$-多重線形性を持たない．
 \end{rem}
 
 
+
+
+
+アファイン接続の局所座標表示が座標変換によってどう移るのかを確認する．
+$(U;x^1, \cdots, x^n)$，$(V;\xi^1, \cdots, \xi^n)$を局所座標とし，局所座標に沿ったベクトル場を引数とするアファイン接続を局所座標表示する．
+簡略化のために以下の表記を用いる．
+\begin{align}
+    \partial_i = \frac{\partial}{\partial x^i}, \ \partial_a = \frac{\partial}{\partial \xi^a}
+\end{align}
+$(U;x^1, \cdots, x^n)$の添え字には$i,j,k$を用い，$(V;\xi^1, \cdots, \xi^n)$の添え字には$a,b,c$を用いると約束する．
+座標変換は次式で書かれる．
+\begin{align}
+    \partial_i = \frac{\partial \xi^a}{\partial x^i} \partial_a, \ \partial_a = \frac{\partial x^i}{\partial \xi^a} \partial_i.
+\end{align}
+
+
+$\nabla_{\partial_i} \partial_j = \Gamma_{i,j}^k \partial_k$，$\nabla_{\partial_a} \partial_b = \Gamma_{a,b}^c \partial_c$と置く．
+$\nabla_{\partial_i} \partial_j$を以下の２通りで計算する：
+１つ目は以下の通りである．
+\begin{align}\label{eq:affine_conn_loc_1}
+    \nabla_{\partial_i} \partial_j = \Gamma_{i,j}^k \partial_k = \Gamma_{i,j}^k \frac{\partial \xi^c}{\partial x^k} \partial_c.
+\end{align}
+２つ目は以下の通りである．
+\begin{align}
+    \nabla_{\partial_i} \partial_j&= \nabla_{\partial_i}\left(\frac{\partial \xi^c}{\partial x^k} \partial_b\right)\\
+    &= \frac{\partial^2 \xi^b}{\partial x^i \partial x^j} \partial_b + \frac{\partial \xi^b}{\partial x^j} \nabla_{\partial_i} \partial_b\\
+    &=\frac{\partial^2 \xi^b}{\partial x^i \partial x^j} \partial_b + \frac{\partial \xi^b}{\partial x^j} \nabla_{\frac{\partial \xi^a}{\partial x^i}\partial_a} \partial_b\\
+    &=\frac{\partial^2 \xi^b}{\partial x^i \partial x^j} \partial_b + \frac{\partial \xi^b}{\partial x^j} \frac{\partial \xi^a}{\partial x^i}\nabla_{\partial_a} \partial_b\\
+    &=\frac{\partial^2 \xi^b}{\partial x^i \partial x^j} \partial_b + \frac{\partial \xi^b}{\partial x^j} \frac{\partial \xi^a}{\partial x^i}\Gamma_{a,b}^c \partial_c\\
+    &=\left(\frac{\partial^2 \xi^c}{\partial x^i \partial x^j}  + \frac{\partial \xi^a}{\partial x^i}\frac{\partial \xi^b}{\partial x^j} \Gamma_{a,b}^c \right)\partial_c.\label{eq:affine_conn_loc_2}
+\end{align}
+\eqref{eq:affine_conn_loc_1}と\eqref{eq:affine_conn_loc_2}を比較して次式を得る．
+\begin{align}
+    \Gamma_{i,j}^k \frac{\partial \xi^c}{\partial x^k} = \frac{\partial^2 \xi^c}{\partial x^i \partial x^j}  + \frac{\partial \xi^a}{\partial x^i}\frac{\partial \xi^b}{\partial x^j} \Gamma_{a,b}^c.
+\end{align}
+座標変換のJacobi行列は正則であるから，両辺にその逆行列$\partial x^k/\partial \xi^c$を左からかけて次式を得る．
+\begin{align}\label{eq:loc_affine_connection}
+    \Gamma_{i,j}^k =\frac{\partial \xi^a}{\partial x^i}\frac{\partial \xi^b}{\partial x^j}\frac{\partial x^k}{\partial \xi^c} \Gamma_{a,b}^c + \frac{\partial^2 \xi^c}{\partial x^i \partial x^j}\frac{\partial x^k}{\partial \xi^c}.
+\end{align}
+\eqref{eq:loc_affine_connection}が局所座標表示されたアファイン接続の満たす等式である．
+
+\begin{defn}
+$M$を可微分多様体とし，$\nabla$を$M$上のアファイン接続とする．
+$M$上の区分的に滑らかな曲線$p:[a,b]\to M$に沿って定義されたベクトル場$Z = \{ Z_{p(t)} \}$が
+\begin{align}\label{eq:paralell_defn}
+    \nabla_{\dot{p}(t)}Z = 0, \ \forall t\in [a,b]
+\end{align}
+を満たすとき、$Z$は接続$\nabla$に関して$p$に沿って平行であるという．
+\end{defn}
+
+局所座標$(U;x^1,\ldots, x^n)$上で\eqref{eq:paralell_defn}を表記する．
+$Z_{p(t)}$を
+\begin{align}
+    Z_{p(t)} = Z^i (t) (\partial_i)_{p(t)}
+\end{align}
+と置き，$\nabla_{\dot{p}(t)}Z$を計算する．
+\begin{align}
+    \nabla_{\dot{p}(t)}Z &= \nabla_{\frac{d p^i}{dt}(t)\partial_i} (Z^j \partial_j)\\
+&=\frac{d p^i}{dt}(t)\nabla_{\partial_i}(Z^j \partial_j)\\
+&=\frac{d p^i}{dt}(t) \left(\frac{\partial Z^j}{\partial x^i} \partial_j + Z^j \nabla_{\partial_i} \partial_j\right)\\
+&=\frac{d p^i}{dt}(t)\frac{\partial Z^j}{\partial x^i} \partial_j + \frac{d p^i}{dt}(t) Z^j \Gamma_{i,j}^k \partial_k\\
+&=\left(\frac{d p^i}{dt}(t)\frac{\partial Z^k}{\partial x^i} + \frac{d p^i}{dt}(t) Z^j \Gamma_{i,j}^k\right) \partial_k\\
+&=\left( \dot{Z}^k(t) + \frac{d p^i}{dt}(t) Z^j \Gamma_{i,j}^k\right) \partial_k
+\end{align}
+よって\eqref{eq:paralell_defn}は任意の$t\in [a,b]$に対して以下が成り立つ．
+\begin{align}\label{eq:paralell_defn_local}
+    \dot{Z}^k(t) + \frac{d p^i}{dt}(t) Z^j(p(t))\Gamma_{i,j}^k(p(t)) = 0.
+\end{align}
+
+
+\begin{defn}
+$M$を可微分多様体とし，$\nabla$を$M$上のアファイン接続，$p:[a,b]\to M$を$M$上の区分的に滑らかな曲線とする．
+$v\in T_{p(a)} M$が与えられたとき，\eqref{eq:paralell_defn_local}の解として定まるベクトル場$Z$の$t=b$での値$Z_{p(b)}\in T_{p(b)} M$を$p$に沿って$v$を$p(a)$から$p(b)$まで平行移動して得られる接ベクトルという．
+\end{defn}
+\end{document}
+
 \begin{prop}\label{prop:two_affine_conn}
 $M$を可微分多様体とし，$\nabla, \nabla'$を$M$上のアファイン接続とする．
-次式で定義される$S:\vf{M}\times \vf{M}\to \vf{M}$はテンソル性を持つ．
+次式で定義される写像$S:\vf{M}\times \vf{M}\to \vf{M}$は$C^\infty(M)$-多重線形性を持つ．
 \begin{align}
     S(X, Y) = \nabla_X Y - \nabla'_X Y
 \end{align}
@@ -49,31 +124,6 @@ $M$を可微分多様体とし，$\nabla, \nabla'$を$M$上のアファイン接
 以上よりテンソル性$S(fX, gY) = fg S(X,Y)$が成り立つ．
 \end{proof}
 \begin{rem}
-アファイン接続を１つ固定しておく．
+アファイン接続を１つ固定する．
 このときもう１つのアファイン接続を与えることは，命題\ref{prop:two_affine_conn}より，$(1,2)$型テンソル場を与えることと同等であるとみなせる．
 \end{rem}
-
-アファイン接続の局所座標表示が座標変換によってどう移るのかを確認する．
-そのためには$(U;x_1, \cdots, x_n)$，$(V;\xi_1, \cdots, \xi_n)$を局所座標とし，局所座標に沿ったベクトル場が$U\cap V$において座標変換でどう移るのかを調べればよい．
-
-$\nabla_{\partial_i} \partial_j = \Gamma_{i,j}^k \partial_k$，$\nabla_{\partial_a} \partial_b = \Gamma_{a,b}^c \partial_c$と置く．
-$\nabla_{\partial_i} \partial_j$を以下の２通りで計算する．
-\begin{align}
-    \nabla_{\partial_i} \partial_j &= \Gamma_{i,j}^k \frac{\partial \xi^c}{\partial x^k} \partial_c,\label{eq:affine_conn_loc_1}\\
-    \nabla_{\partial_i} \partial_j&= \nabla_{\partial_i}\left(\frac{\partial \xi^c}{\partial x^k} \partial_b\right)\\
-    &= \frac{\partial^2 \xi^b}{\partial x^i \partial x^j} \partial_b + \frac{\partial \xi^b}{\partial x^j} \nabla_{\partial_i} \partial_b\\
-    &=\frac{\partial^2 \xi^b}{\partial x^i \partial x^j} \partial_b + \frac{\partial \xi^b}{\partial x^j} \nabla_{\frac{\partial \xi^a}{\partial x^i}\partial_a} \partial_b\\
-    &=\frac{\partial^2 \xi^b}{\partial x^i \partial x^j} \partial_b + \frac{\partial \xi^b}{\partial x^j} \frac{\partial \xi^a}{\partial x^i}\nabla_{\partial_a} \partial_b\\
-    &=\frac{\partial^2 \xi^b}{\partial x^i \partial x^j} \partial_b + \frac{\partial \xi^b}{\partial x^j} \frac{\partial \xi^a}{\partial x^i}\Gamma_{a,b}^c \partial_c\\
-    &=\left(\frac{\partial^2 \xi^c}{\partial x^i \partial x^j}  + \frac{\partial \xi^a}{\partial x^i}\frac{\partial \xi^b}{\partial x^j} \Gamma_{a,b}^c \right)\partial_c.\label{eq:affine_conn_loc_2}
-\end{align}
-\eqref{eq:affine_conn_loc_1}と\eqref{eq:affine_conn_loc_2}より次式を得る．
-\begin{align}
-    \Gamma_{i,j}^k \frac{\partial \xi^c}{\partial x^k} = \frac{\partial^2 \xi^c}{\partial x^i \partial x^j}  + \frac{\partial \xi^a}{\partial x^i}\frac{\partial \xi^b}{\partial x^j} \Gamma_{a,b}^c.
-\end{align}
-特に座標変換のJacobi行列は正則であるから次式を得る．
-\begin{align}
-    \Gamma_{i,j}^k =\frac{\partial \xi^a}{\partial x^i}\frac{\partial \xi^b}{\partial x^j}\frac{\partial x^k}{\partial \xi^c} \Gamma_{a,b}^c + \frac{\partial^2 \xi^c}{\partial x^i \partial x^j}\frac{\partial x^k}{\partial \xi^c}.
-\end{align}
-\end{document}
-
